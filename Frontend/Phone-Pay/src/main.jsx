@@ -8,6 +8,9 @@ import Header from './Pages/Header.jsx'
 import { lazy, Suspense } from 'react'
 import { Provider } from 'react-redux'
 import store from './Utils/store.js'
+const Recharge = lazy(() => import('./Pages/Recharge.jsx')) 
+const Bill = lazy(() => import('./Pages/Bill.jsx'))  
+const Insuarance = lazy(() => import('./Pages/Insuarance.jsx'))  
 const Login = lazy(() => import('./Pages/login.jsx'))
 const Home = lazy(() => import('./Pages/Home.jsx'))
 const Register = lazy(() => import('./Pages/register.jsx'))
@@ -47,6 +50,24 @@ const appRouter = createBrowserRouter([
         path: '/transaction',
         element: <Suspense fallback='loading....'>
           <Transaction/>
+        </Suspense>
+      },
+      {
+        path: '/recharge',
+        element: <Suspense fallback='loading....'>
+          <Recharge/>
+        </Suspense>
+      },
+      {
+        path: '/bill',
+        element: <Suspense fallback='loading....'>
+          <Bill/>
+        </Suspense>
+      },
+      {
+        path: '/insuarance',
+        element: <Suspense fallback='loading....'>
+          <Insuarance/>
         </Suspense>
       },
     ]

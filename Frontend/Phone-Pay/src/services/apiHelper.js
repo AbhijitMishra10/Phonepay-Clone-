@@ -13,3 +13,6 @@ API.interceptors.request.use((req) => {
 export const fetchBalance = () => API.get("/transactions/balance")
 export const sendMoney = () => API.get("/transactions/send")
 export const fetchHistory = () => API.get("/transactions/history")
+export const recharge = (data) => API.post("/transaction/recharge", data)
+export const bill = (data) => API.post("/transaction/bill", data)
+export const insuaranceService = (data) => API.post("/transaction/insuaranceService",data)

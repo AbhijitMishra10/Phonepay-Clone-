@@ -14,8 +14,14 @@ export const sendMoney = async(req,res) => {
         const{phone, amount} = req.body
         const sender = await USER.findById(req.user.id)
         const receiver = await USER.findOne({phone})
+        if(amount <= 0){
+            return res.status(400).json({m: "Invalid Amount"})
+        }
         if(!receiver) {
             return res.status(400).json({m: "Receiver not found"})
+        }
+        if(receiver._id.toString() === sender._id.toString()){
+            return res.status(400).json({m: "Cant send money to yourself"})
         }
         if(sender.balance < amount) {
             return res.status(400).json({m: "Insufficient balance"})
@@ -56,3 +62,78 @@ export const getTransactions = async(req,res) => {
     }
 }
 
+export const recharge = async(req,res) => {
+    try {
+        const{phone, amount} = req.body
+        const user = await USER.findById(req.user.id)
+
+        if(user.balance < amount) {
+            return res.status(400).json({m:"Insufficient Balance"})
+        }
+        user.balance -= amount
+        await user.save()
+        
+        const transaction = new TRANSACTION({
+            sender: USER.id,
+            receiver: USER.id, 
+            amount,
+            type: "recharge"
+        })
+        
+        await transaction.save()
+        return res.status(201).json({m:`Recharge Successful for ${phone}`, transaction})
+    } catch (error) {
+        return res.status(500).json({m:"Server Error", err: error.name})
+        
+    }
+}
+export const bill = async(req,res) => {
+    try {
+        const{biller, amount} = req.body
+        const user = await USER.findById(req.user.id)
+
+        if(user.balance < amount) {
+            return res.status(400).json({m:"Insufficient Balance"})
+        }
+        user.balance -= amount
+        await user.save()
+        
+        const transaction = new TRANSACTION({
+            sender: USER.id,
+            receiver: USER.id, 
+            amount,
+            type: "bill"
+        })
+        
+        await transaction.save()
+        return res.status(201).json({m:`Recharge Successful for ${biller}`, transaction})
+    } catch (error) {
+        return res.status(500).json({m:"Server Error", err: error.name})
+        
+    }
+}
+export const insuaranceService = async(req,res) => {
+    try {
+        const{policyHolder, amount} = req.body
+        const user = await USER.findById(req.user.id)
+
+        if(user.balance < amount) {
+            return res.status(400).json({m:"Insufficient Balance"})
+        }
+        user.balance -= amount
+        await user.save()
+        
+        const transaction = new TRANSACTION({
+            sender: USER.id,
+            receiver: USER.id, 
+            amount,
+            type: "Insuarance"
+        })
+        
+        await transaction.save()
+        return res.status(201).json({m:`Insuarance Successful for ${policyHolder}`, transaction})
+    } catch (error) {
+        return res.status(500).json({m:"Server Error", err: error.name})
+        
+    }
+}
