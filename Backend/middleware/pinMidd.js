@@ -8,6 +8,11 @@ const pinnMidd = async(req,res,next) => {
         if(!pin || pin !== user.pin) {
             return res.status(401).json({m: "Invalid Transaction PIN"})
         }
+
+        const isMatch = await user.matchPin(pin)
+        if(!isMatch){
+            return res.status(400).json({m: "Invalid Transaction PIN"})
+        }
         return next()
     } catch (error) {
         res.status(500).json({m: "Server Error", err: error.message})

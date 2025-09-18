@@ -8,22 +8,23 @@ const Key = process.env.SECRET
 
 export const register = async(req,res) => {
     try {
-        const{userName, email, password} = req.body
-        if(!userName || !email || !password) {
+        const{userName,phone, email, password, pin} = req.body
+        if(!userName || !email || !password || !pin) {
             return res.status(400).json({m:"Fill the fields first"})
         }
         const existingUser = await AUTH.findOne({email})
         if(existingUser) return res.status(400).json({m:"User already present!"})
         const hashedPass = await bcrypt.hash(password,12)
-        const newUser = await AUTH.create({userName, email, password: hashedPass})
-        return res.status(201).json({m:"User registered successfully", user: {id: newUser.id, name: newUser.userName, email: newUser.email}})
+        const hashedPin = await bcrypt.hash(pin,12)
+        const newUser = await AUTH.create({userName,phone, email, password: hashedPass, pin: hashedPin})
+        return res.status(201).json({m:"User registered successfully", user: {id: newUser.id, name: newUser.userName,phn: newUser.phone, email: newUser.email}})
     } catch (error) {
         return res.status(500).json({m:"Fill the fields first"})
     }
 }
 export const login = async(req,res) => {
     try {
-        const{email, password} = req.body
+        const{email, password, pin} = req.body
         if(!email || !password) {
             return res.status(400).json({m:"Fill the fields first"})
         }
