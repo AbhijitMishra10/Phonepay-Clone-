@@ -5,8 +5,8 @@ const pinnMidd = async(req,res,next) => {
         const {pin} = req.body
         const user = await USER.findById(req.user.id)
 
-        if(!pin || pin !== user.pin) {
-            return res.status(401).json({m: "Invalid Transaction PIN"})
+        if(!pin) {
+            return res.status(401).json({m: "Pin is missing"})
         }
 
         const isMatch = await user.matchPin(pin)

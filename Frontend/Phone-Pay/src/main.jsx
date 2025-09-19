@@ -16,6 +16,7 @@ const Home = lazy(() => import('./Pages/Home.jsx'))
 const Register = lazy(() => import('./Pages/register.jsx'))
 const Reduxx = lazy(() => import('./Pages/Reduxx.jsx'))
 const Transaction = lazy(() => import('./Pages/Transaction.jsx'))
+const Merchant = lazy(() => import('./Pages/Merchant.jsx'))
 const appRouter = createBrowserRouter([
   {
     path: '/',
@@ -68,6 +69,12 @@ const appRouter = createBrowserRouter([
         path: '/insuarance',
         element: <Suspense fallback='loading....'>
           <Insuarance/>
+        </Suspense>
+      },
+      {
+        path: '/merchant',
+        element: <Suspense fallback='loading....'>
+          <Merchant/>
         </Suspense>
       },
     ]

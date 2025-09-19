@@ -16,3 +16,8 @@ export const fetchHistory = () => API.get("/transactions/history")
 export const recharge = (data) => API.post("/transaction/recharge", data)
 export const bill = (data) => API.post("/transaction/bill", data)
 export const insuaranceService = (data) => API.post("/transaction/insuaranceService",data)
+export const createMerchant = (data) => API.post("/merchant/create", data)
+export const getQR = (data) => API.post(`/merchant/${id}/qr`)
+export const payMerchant = (data) => API.post("/merchant/payMercant", data)
+
+

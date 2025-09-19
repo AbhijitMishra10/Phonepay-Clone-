@@ -26,7 +26,15 @@ function History() {
                 <ul>
                     {transactions.map((txt) => (
                         <li key={txt._id}>
-                            {txt.sender?.userName} → {txt.receiver?.name} : ₹{txt.amount} ({txt.type})
+                            {txt.type === "merchant" ? (
+                            <>You → Merchant ({txt.receiver?.shopName}) : ₹{txt.amount}</>
+                            ) : txt.type === "recharge" ? (
+                            <>Recharge for {txt.sender?.name} : ₹{txt.amount}</>
+                            ) : txt.type === "bill" ? (
+                            <>Bill Payment : ₹{txt.amount}</>
+                        ) : (
+                            <>{txt.sender?.userName} → {txt.receiver?.name} : ₹{txt.amount} ({txt.type})</>
+                        )}
                         </li>
                     ))}
                 </ul>

@@ -9,6 +9,7 @@ function Header() {
             <Link to='/home'>Home</Link>
             <Link to='/redux'>Reduxx</Link>
             <Link to='/transaction'>Transaction</Link>
+            <Link to='/merchant'>Merchant</Link>
         </div>
     )
 }

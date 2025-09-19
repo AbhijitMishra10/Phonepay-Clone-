@@ -1,6 +1,6 @@
 import USER from "../models/user.model.js";
 import TRANSACTION from "../models/transaction.model.js";
-
+import Merchant from "../models/merchant.model.js";
 export const getBalance = async(req,res) => {
     try {
         const user = await USER.findById(req.user.id)
@@ -135,5 +135,36 @@ export const insuaranceService = async(req,res) => {
     } catch (error) {
         return res.status(500).json({m:"Server Error", err: error.name})
         
+    }
+}
+
+export const payMerchant = async(req,res) => {
+    try {
+        const{merchantId, amount, pin} = req.body
+        const user = await USER.findById(req.user.id)
+        const merchant = await Merchant.findById(merchantId)
+        if(!merchant) return res.status(400).json({m:"Merchant not found"})
+            
+        if(user.balance < amount) {
+            return res.status(400).json({m:"Insufficient Balance"})
+        }    
+
+        user.balance -= amount
+        merchant.balance += amount
+
+        await user.save()
+        await merchant.save()
+
+        const transaction = new TRANSACTION({
+            sender: user._id,
+            receiver: merchant._id,
+            amount,
+            type: "merchant",
+            status: "success"
+        })
+        await transaction.save()
+        return res.status(201).json({m:`Payment of ₹${amount} to ${merchant.shopName} successful`, transaction})
+    } catch (error) {
+        return res.status(500).json({m:"Server Error", err: error.name})        
     }
 }
