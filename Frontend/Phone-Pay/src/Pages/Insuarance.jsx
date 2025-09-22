@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { insuaranceService } from '../services/apiHelper'
+import {toast} from 'react-toastify'
 function Insuarance() {
   const[policyHolder, setPolicyHolder] = useState("")
   const[amount, setAmount] = useState("")
@@ -7,12 +8,12 @@ function Insuarance() {
   const handleClick = async() => {
     try {
         const{data} = await insuaranceService({policyHolder, amount: Number(amount), pin}) 
-        alert(data.message)
+        toast.success(`Sent ₹${amount} to ${policyHolder}`)
         setPolicyHolder("")
         setAmount("")
     } catch (error) {
         console.error(error)
-        alert("Insuarance Claim/Renewal failed")
+        toast.error("Insuarance Claim/Renewal failed")
     }
   }
   return (

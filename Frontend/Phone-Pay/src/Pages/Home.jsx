@@ -17,11 +17,37 @@ function Home() {
     }
     getBalance()
   }, [dispatch])
-  return (
-    <div>
-      <h1>Waller Ballance 💸: {balance}</h1>
+ return (
+    <div className="grid grid-cols-2 gap-4 mt-6">
+      <Link to="/transaction">
+        <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center hover:shadow-lg transition">
+          <span className="text-3xl">💸</span>
+          <h3 className="mt-2 font-bold">Send Money</h3>
+        </div>
+      </Link>
+
+      <Link to="/recharge">
+        <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center hover:shadow-lg transition">
+          <span className="text-3xl">📱</span>
+          <h3 className="mt-2 font-bold">Recharge</h3>
+        </div>
+      </Link>
+
+      <Link to="/bill">
+        <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center hover:shadow-lg transition">
+          <span className="text-3xl">💡</span>
+          <h3 className="mt-2 font-bold">Bill Pay</h3>
+        </div>
+      </Link>
+
+      <Link to="/merchant">
+        <div className="bg-white rounded-xl shadow p-6 flex flex-col items-center hover:shadow-lg transition">
+          <span className="text-3xl">🏪</span>
+          <h3 className="mt-2 font-bold">Merchant Pay</h3>
+        </div>
+      </Link>
     </div>
-  )
+  );
 }
 
 export default Home

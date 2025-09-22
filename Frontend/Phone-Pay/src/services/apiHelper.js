@@ -19,5 +19,6 @@ export const insuaranceService = (data) => API.post("/transaction/insuaranceServ
 export const createMerchant = (data) => API.post("/merchant/create", data)
 export const getQR = (data) => API.post(`/merchant/${id}/qr`)
 export const payMerchant = (data) => API.post("/merchant/payMercant", data)
+export const fetchRewards = () => API.get("/rewards");
 
 

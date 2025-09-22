@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { payMerchant } from "../services/apiHelper";
-
+import {toast} from 'react-toastify'
 function MerchantPay() {
     const[merchantId, setMerchantId] = useState("")
     const[amount, setAmount] = useState("")
@@ -13,13 +13,13 @@ function MerchantPay() {
                 amount: Number(amount),
                 pin
             })
-            alert(data.messsage)
+            toast.success(`Sent ₹${amount} to ${merchantId}`)
             setMerchantId("")
             setAmount("")
             setPin("")
         } catch (err) {
             console.error(err)
-            alert("Payment Failed")
+            toast.error("Payment Failed")
         }
     }
     return(

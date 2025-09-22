@@ -19,7 +19,7 @@ const transactionSlice = createSlice({
         }, 
         setTransactions: (state,action) => {
             state.transactions = action.payload
-        } 
+        }
     }
 })
 

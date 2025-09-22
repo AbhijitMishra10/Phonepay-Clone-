@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { bill } from '../services/apiHelper'
+import {toast} from 'react-toastify'
 function Bill() {
   const[amount, setAmount] = useState("")
   const[biller, setBiller] = useState("")
@@ -7,13 +8,13 @@ function Bill() {
   const handleClick = async() => {
     try {
         const {data} = await bill({biller, amount: Number(amount), pin})
-        alert(data.message)
+        toast.success(`Sent ₹${amount} to ${biller}`)
         setAmount("")
         setBiller("")
         setPin("")
     } catch (error) {
         console.error(error)
-        alert("Recharge failed")
+        toast.error("Recharge failed")
     }
   }
   return (

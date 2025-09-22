@@ -1,6 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import {ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Error from './Pages/Error.jsx'
@@ -17,6 +19,7 @@ const Register = lazy(() => import('./Pages/register.jsx'))
 const Reduxx = lazy(() => import('./Pages/Reduxx.jsx'))
 const Transaction = lazy(() => import('./Pages/Transaction.jsx'))
 const Merchant = lazy(() => import('./Pages/Merchant.jsx'))
+const Rewards = lazy(() => import('./Pages/FetchReward.jsx'))
 const appRouter = createBrowserRouter([
   {
     path: '/',
@@ -77,6 +80,12 @@ const appRouter = createBrowserRouter([
           <Merchant/>
         </Suspense>
       },
+      {
+        path: '/rewards',
+        element: <Suspense fallback='loading....'>
+          <Rewards/>
+        </Suspense>
+      },
     ]
   }
 ])
@@ -84,5 +93,6 @@ createRoot(document.getElementById('root')).render(
   <Provider store={store}>
   <RouterProvider router={appRouter}>
   </RouterProvider>
+  <ToastContainer position='top-center' autoClose={3000}/>
   </Provider>
 )

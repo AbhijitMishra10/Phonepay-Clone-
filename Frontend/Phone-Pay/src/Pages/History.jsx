@@ -23,21 +23,30 @@ function History() {
             {transactions.length === 0 ? (
                 <p>No transaction yet</p>
             ) : (
-                <ul>
-                    {transactions.map((txt) => (
-                        <li key={txt._id}>
-                            {txt.type === "merchant" ? (
-                            <>You → Merchant ({txt.receiver?.shopName}) : ₹{txt.amount}</>
-                            ) : txt.type === "recharge" ? (
-                            <>Recharge for {txt.sender?.name} : ₹{txt.amount}</>
-                            ) : txt.type === "bill" ? (
-                            <>Bill Payment : ₹{txt.amount}</>
-                        ) : (
-                            <>{txt.sender?.userName} → {txt.receiver?.name} : ₹{txt.amount} ({txt.type})</>
-                        )}
+                <ul className="mt-4 space-y-3">
+                    {transactions.map((tx) => (
+                        <li
+                        key={tx._id}
+                        className="bg-white shadow rounded-lg p-4 flex justify-between items-center"
+                        >
+                        <div>
+                            {tx.type === "merchant" ? (
+                            <p className="font-semibold">Paid Merchant: {tx.receiver?.shopName}</p>
+                            ) : tx.type === "recharge" ? (
+                            <p className="font-semibold">Mobile Recharge</p>
+                            ) : tx.type === "bill" ? (
+                            <p className="font-semibold">Bill Payment</p>
+                            ) : (
+                            <p className="font-semibold">
+                                {tx.sender?.name} → {tx.receiver?.name}
+                            </p>
+                            )}
+                            <p className="text-sm text-gray-500">{new Date(tx.date).toLocaleString()}</p>
+                        </div>
+                        <p className="font-bold text-phonepe-purple">₹{tx.amount}</p>
                         </li>
                     ))}
-                </ul>
+                    </ul>
             )}
         </div>
     )

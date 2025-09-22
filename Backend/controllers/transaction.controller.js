@@ -155,12 +155,20 @@ export const payMerchant = async(req,res) => {
         await user.save()
         await merchant.save()
 
+        let cashback = 0
+        if(amount >= 100){
+            cashback = Math.floor(amount * 0.1)
+            user.balance += cashback
+        }
+
         const transaction = new TRANSACTION({
             sender: user._id,
             receiver: merchant._id,
+            onModel: "Merchant",
             amount,
             type: "merchant",
-            status: "success"
+            status: "success",
+            cashback
         })
         await transaction.save()
         return res.status(201).json({m:`Payment of ₹${amount} to ${merchant.shopName} successful`, transaction})
